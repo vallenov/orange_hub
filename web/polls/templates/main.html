@@ -9,12 +9,146 @@
       body{margin-top: 50px;}
       h1 {color: #444444;margin: 50px auto 30px;text-align: center;margin-bottom: 50px; font-family: "Times New Roman";}
       h4 {color: #20c997;margin-top: 50px; text-align: center;font-family: "Times New Roman"}
+      .button {display: block;width: unset;color: white;background-color: #1abc9c;border: none;color: white;padding: 13px 30px;text-decoration: none;font-size: 25px;margin: 0px auto 35px;cursor: pointer;border-radius: 12px;box-sizing: unset;}
+      .button-on {background-color: #1abc9c;}
+      .button-on:active {background-color: #16a085;}
+      .button-off {background-color: #34495e;}
+      .button-off:active {background-color: #2c3e50;}
+      .button-color:active {background-color: #2c3e50;margin: 0;}
+      .range-color {color: #20c997; text-align: center;width: 100%;-webkit-appearance: none;}
+      .range-brightness {color: #20c997; text-align: center;width: 100%;-webkit-appearance: none;}
+      .range-color::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 31px;
+        cursor: pointer;
+        animate: 0.2s;
+/*        box-shadow: 1px 1px 1px #000000;*/
+/*        background: linear-gradient(to right in hsl longer hue, oklch(63% 0.3 317), oklch(63% 0.2 255));*/
+        background: linear-gradient(to right in hsl longer hue, oklch(70% 0.2 145), oklch(70% 0.2 146));
+        border-radius: 8px;
+        border: 0px solid #010101;
+        margin-top: 30px;
+      }
+      .range-color::-webkit-slider-thumb {
+        box-shadow: 1px 1px 1px #000031;
+        border: 1px solid #00001E;
+        height: 53px;
+        width: 22px;
+        opacity: 0.33;
+        border-radius: 19px;
+        background: #FFFFFF;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -11.5px;
+      }
+      .range-brightness::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 11px;
+        cursor: pointer;
+        animate: 0.2s;
+        box-shadow: 1px 1px 1px #000000;
+        background: #16a085;
+        border-radius: 1px;
+        border: 0px solid #010101;
+        margin-top: 30px;
+      }
+      .range-brightness::-webkit-slider-thumb {
+        box-shadow: 1px 1px 1px #000031;
+        border: 1px solid #00001E;
+        height: 43px;
+        width: 22px;
+        border-radius: 19px;
+        background: #FFFFFF;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -16.5px;
+      }
+      .select {width: 50%;background-color: #16a085; margin-top: 30px; margin-bottom: 30px}
       .label {font-size: 24px;color: #888;margin-bottom: 10px;font-family: "Times New Roman"}
       p {font-size: 24px;color: #888;margin-bottom: 10px;font-family: "Times New Roman"}
     </style>
   </head>
+  <script type="text/javascript">
+    async function httpGet(url, params=null){
+        if (params) {
+          url += '?';
+        }
+        let resp = await fetch('http://0.0.0.0:80' + url + params);
+        let text = resp.text();
+        console.log(text);
+    }
+    function showColorVal(val) {
+        color_value.textContent = val;
+    }
+    function showBrightnessVal(val) {
+        brightness_value.textContent = String(Number(100 / 255 * val).toFixed(0)) + '%';
+    }
+    function showEffectSpeedVal(val) {
+        effect_speed_value.textContent = String(Number(val).toFixed(0)) + '%';
+    }
+    function showScreenBrightness(val) {
+        screen_brightness_value.textContent = String(Number(100 / 255 * val).toFixed(0)) + '%';
+    }
+  </script>
   <body>
-    <h1>Добро пожаловать!</h1>
-    <h2>Заголовок</h2>
+    <h1>Pirozhochek's house</h1>
+    <div class="container" style="text-align: center">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <div class="col" style="text-align: center">
+          <label class="label">Светодиодная лента:</label>
+        </div>
+        <div class="col">
+          <a class="button button-off" href="/main_led/off">Выкл.</a>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="text-align: center">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <div class="col">
+          <input class="range-color" id="color_input" type="range" min="0" max="255" step="1" value="0" oninput="showColorVal(this.value)" onchange="httpGet('/main_led/color', new URLSearchParams({id: this.value}))">
+          <p>Цвет: <output id="color_value">0</output></p>
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <div class="col">
+          <input class="range-brightness" id="color_input" type="range" min="0" max="255" step="1" value="0" oninput="showBrightnessVal(this.value)" onchange="httpGet('/main_led/brightness', new URLSearchParams({id: this.value}))">
+          <p>Яркость: <output id="brightness_value">0%</output></p>
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <div class="col">
+          <form>
+            <label class="label" for="effects">Эффект:</label>
+            <select class="select" id="effects" name="effects" onchange="httpGet('/main_led/effect', new URLSearchParams({id: this.value}))"> >
+              <option value="0">Без эффекта</option>
+              <option value="1">Пламя</option>
+              <option value="2">Радуга на всю ленту</option>
+              <option value="3">Радуга переливом</option>
+            </select>
+          </form>
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <div class="col">
+          <input class="range-brightness" id="effect_speed_input" type="range" min="1" max="100" step="1" value="0" oninput="showEffectSpeedVal(this.value)" onchange="httpGet('/main_led/effect_speed', new URLSearchParams({id: this.value}))">
+          <p>Скорость эффекта: <output id="effect_speed_value">1%</output></p>
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <div class="col">
+          <input class="range-brightness" id="screen_brightness_input" type="range" min="0" max="255" step="1" value="0" oninput="showScreenBrightness(this.value)" onchange="httpGet('/screen/brightness', new URLSearchParams({id: this.value}))">
+          <p>Яркость экрана: <output id="screen_brightness_value">0%</output></p>
+        </div>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <div class="col"></div>
+        <div class="col">
+          <h4>v. 1.1.0</h4>
+        </div>
+        <div class="col">
+          <h4>Made by Pirozhochek for Pirozhocheks</h4>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
