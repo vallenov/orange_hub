@@ -294,7 +294,6 @@ class Bot:
         """
         Bot.init_bot()
         Bot.init_dirs()
-        Bot.init_loaders()
         Bot.mapping = {
             'exchange': Bot.internet_loader.get_exchange,
             'weather': Bot.internet_loader.get_weather,
