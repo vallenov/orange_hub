@@ -1,4 +1,4 @@
-from malinka_web.malinka_web.apps.utils.log.middleware import get_request
+from apps.utils.log.middleware import get_request
 
 
 class RequestFilter:

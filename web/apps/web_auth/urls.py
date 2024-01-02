@@ -1,6 +1,6 @@
 from django.urls import re_path
 
-from malinka_web.malinka_web.apps.malinka_auth.views import (
+from apps.web_auth.views import (
     LoginView,
     LogoutView
 )

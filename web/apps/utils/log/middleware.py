@@ -4,8 +4,8 @@ import threading
 
 from rest_framework.response import Response
 
-from malinka_web.malinka_web.apps.common.status_codes import StatusCodes
-from malinka_web.malinka_web.apps.common.serializers import (
+from apps.common.status_codes import StatusCodes
+from apps.common.serializers import (
     RequestSerializer,
     ResponseSerializer,
 )
