@@ -1,6 +1,7 @@
 import logging
 
 from rest_framework.views import APIView
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from apps.utils.esp8266.esp import esp
@@ -24,7 +25,7 @@ class MainLEDColor(APIView):
         val = request.GET.get('id')
         if val:
             esp.main_led.color_switch(val=val)
-        return render(request, template_name='main.html')
+        return HttpResponse(status=200)
 
 
 class MainLEDBrightness(APIView):
@@ -33,7 +34,7 @@ class MainLEDBrightness(APIView):
         val = request.GET.get('id')
         if val:
             esp.main_led.brightness_switch(val=val)
-        return render(request, template_name='main.html')
+        return HttpResponse(status=200)
 
 
 class MainLEDEffect(APIView):
@@ -42,7 +43,7 @@ class MainLEDEffect(APIView):
         val = request.GET.get('id')
         if val:
             esp.main_led.effect_switch(val=val)
-        return render(request, template_name='main.html')
+        return HttpResponse(status=200)
 
 
 class MainLEDEffectSpeed(APIView):
@@ -51,4 +52,4 @@ class MainLEDEffectSpeed(APIView):
         val = request.GET.get('id')
         if val:
             esp.main_led.effect_speed_switch(val=val)
-        return render(request, template_name='main.html')
+        return HttpResponse(status=200)
