@@ -73,7 +73,7 @@
         if (params) {
           url += '?';
         }
-        let resp = await fetch('http://0.0.0.0:80' + url + params);
+        let resp = await fetch('http://0.0.0.0:6061' + url + params);
         let text = resp.text();
         console.log(text);
     }
@@ -97,21 +97,27 @@
         <div class="col" style="text-align: center">
           <label class="label">Светодиодная лента:</label>
         </div>
-        <div class="col">
-          <a class="button button-off" href="/main_led/off">Выкл.</a>
-        </div>
+        {% if power %}
+          <div class="col">
+            <a class="button button-off" href="/light/main_led/power">Выкл.</a>
+          </div>
+        {% else %}
+          <div class="col">
+            <a class="button button-on" href="/light/main_led/power">Вкл.</a>
+          </div>
+        {% endif %}
       </div>
     </div>
     <div class="container" style="text-align: center">
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
         <div class="col">
-          <input class="range-color" id="color_input" type="range" min="0" max="255" step="1" value="0" oninput="showColorVal(this.value)" onchange="httpGet('/main_led/color', new URLSearchParams({id: this.value}))">
+          <input class="range-color" id="color_input" type="range" min="0" max="255" step="1" value="0" oninput="showColorVal(this.value)" onchange="httpGet('/light/main_led/color', new URLSearchParams({id: this.value}))">
           <p>Цвет: <output id="color_value">0</output></p>
         </div>
       </div>
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
         <div class="col">
-          <input class="range-brightness" id="color_input" type="range" min="0" max="255" step="1" value="0" oninput="showBrightnessVal(this.value)" onchange="httpGet('/main_led/brightness', new URLSearchParams({id: this.value}))">
+          <input class="range-brightness" id="color_input" type="range" min="0" max="255" step="1" value="0" oninput="showBrightnessVal(this.value)" onchange="httpGet('/light/main_led/brightness', new URLSearchParams({id: this.value}))">
           <p>Яркость: <output id="brightness_value">0%</output></p>
         </div>
       </div>
@@ -119,7 +125,7 @@
         <div class="col">
           <form>
             <label class="label" for="effects">Эффект:</label>
-            <select class="select" id="effects" name="effects" onchange="httpGet('/main_led/effect', new URLSearchParams({id: this.value}))"> >
+            <select class="select" id="effects" name="effects" onchange="httpGet('/light/main_led/effect', new URLSearchParams({id: this.value}))"> >
               <option value="0">Без эффекта</option>
               <option value="1">Пламя</option>
               <option value="2">Радуга на всю ленту</option>
@@ -130,7 +136,7 @@
       </div>
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
         <div class="col">
-          <input class="range-brightness" id="effect_speed_input" type="range" min="1" max="100" step="1" value="0" oninput="showEffectSpeedVal(this.value)" onchange="httpGet('/main_led/effect_speed', new URLSearchParams({id: this.value}))">
+          <input class="range-brightness" id="effect_speed_input" type="range" min="1" max="100" step="1" value="0" oninput="showEffectSpeedVal(this.value)" onchange="httpGet('/light/main_led/effect_speed', new URLSearchParams({id: this.value}))">
           <p>Скорость эффекта: <output id="effect_speed_value">1%</output></p>
         </div>
       </div>
