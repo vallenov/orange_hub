@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #'admin',
     'web_auth',
+    'light',
 ]
 
 MIDDLEWARE = [
