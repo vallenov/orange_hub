@@ -6,4 +6,5 @@ urlpatterns = [
     path('', MainPage.as_view()),
     #path('admin/', include('admin.urls')),
     path('auth/', include('web_auth.urls')),
+    path('light/', include('light.urls')),
 ]
