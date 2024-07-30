@@ -17,6 +17,8 @@ ROOT_URLCONF = 'urls'
 
 SECRET_KEY = getattr(local_settings, 'LOCAL_SECRET_KEY', '')
 
+ESP_HUB_HOST = getattr(local_settings, 'ESP_HUB_HOST', 'http://0.0.0.0')
+
 STATIC_URL = '/static/'
 
 TEMPLATES = [
@@ -36,6 +38,7 @@ INSTALLED_APPS = [
     #'admin',
     'web_auth',
     'light',
+    'hub_screen',
 ]
 
 MIDDLEWARE = [
